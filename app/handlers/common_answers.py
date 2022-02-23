@@ -12,6 +12,7 @@ translator = Translator()
 bot = Bot(token=config.TOKEN, parse_mode = 'html')
 
 
+# Sending lang table
 async def send_lang_list(message: types.Message):
     user_id = message.from_user.id
 
@@ -28,6 +29,7 @@ async def send_lang_list(message: types.Message):
         await message.answer("❗️ Tarjima uchun matnni kiriting ❗️")
 
 
+# Send result translating
 async def send_translate(message: types.Message):
     user_id = message.from_user.id
 
@@ -35,15 +37,15 @@ async def send_translate(message: types.Message):
         await message.answer("Iltimos avval kanallarga a'zo bo'ling", reply_markup = buttons.link_btns())
 
     else:
-        # try:
-        src = connection.getUser(user_id)[1]
-        dest = connection.getUser(user_id)[2]
+        try:
+            src = connection.getUser(user_id)[1]
+            dest = connection.getUser(user_id)[2]
 
-        result = translator.translate(message.text, src=src, dest=dest).text
+            result = translator.translate(message.text, src=src, dest=dest).text
 
-        await message.answer(result)
-        # except:
-        #     await message.answer("Iltimos, avval tarjima qilinadigan tilni tanlang:")
+            await message.answer(result)
+        except:
+            await message.answer("Iltimos, avval tarjima qilinadigan tilni tanlang:")
 
 
 
